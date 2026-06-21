@@ -168,5 +168,4 @@ Focused on Linux infrastructure, automation, and security engineering.
 
 If you like this project, consider giving it a ⭐ on GitHub:
 
-https://github.com/ankitsinghvisen/Linux-Hardening-Automation-Script
-```
+https://github.com/ankitsinghvisen/Linux-Hardening-Automation-Script ```
