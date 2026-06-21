@@ -2,7 +2,9 @@
 
 ## 📌 Overview
 
-This project is an automated Linux security hardening script designed to improve SSH security, enforce authentication policies, configure firewall rules, and protect against brute-force attacks using Fail2Ban.
+This project is an automated Linux security hardening and monitoring script designed to improve SSH security, enforce authentication policies, configure firewall rules, and provide real-time brute-force attack alerts using Fail2Ban with email notifications.
+
+It also generates SOC-style logs and security reports for system auditing and monitoring.
 
 It supports both Debian-based and RPM-based Linux distributions.
 
@@ -12,15 +14,17 @@ GitHub Repository: https://github.com/ankitsinghvisen/Linux-Hardening-Automation
 
 ## 🚀 Features
 
-- 🔒 Secure SSH configuration (in-place updates)
+- 🔒 Secure SSH configuration (in-place safe updates)
 - 🚫 Disable root login via SSH
-- 🔑 Enable key-based authentication only
+- 🔑 Enforce key-based authentication only
 - ❌ Disable password & empty password login
-- 🧱 Restrict SSH sessions and login attempts
-- 📊 Enable detailed SSH logging (SOC visibility)
+- 🧱 Restrict SSH login attempts and sessions
+- 📊 SOC-style structured logging with timestamps
 - 🔥 Firewall configuration (SSH only - port 22)
-- 🛡️ Fail2Ban installation & SSH protection
-- 📄 Automated security report generation
+- 🛡️ Fail2Ban installation & SSH brute-force protection
+- 📧 Email alerts for security incidents (Fail2Ban integration)
+- 📄 SOC-style automated security report generation
+- 📦 Automatic installation of required dependencies (sendmail, mailutils)
 
 ---
 
@@ -38,10 +42,10 @@ linux-hardening-tool/
 │
 ├── harden.sh              # Main automation script
 ├── logs/
-│   └── hardening.log
+│   └── hardening.log      # SOC-style logs with timestamps
 │
 ├── report/
-│   └── security_report.txt
+│   └── security_report.txt # Security audit report
 │
 └── README.md
 ```
@@ -73,7 +77,7 @@ sudo ./harden.sh
 
 ## 🔐 SSH Hardening Configuration
 
-The script applies the following SSH settings:
+The script applies the following secure SSH settings:
 
 ```
 SyslogFacility AUTH
@@ -92,13 +96,14 @@ MaxSessions 5
 ## 🔥 Firewall Configuration
 
 - Only SSH port (22/tcp) is allowed
-- All other ports are blocked (optional extension)
+- Optional support for UFW and Firewalld
+- All other ports are blocked by default (based on system configuration)
 
 ---
 
 ## 🛡️ Fail2Ban Protection
 
-Fail2Ban is used to protect SSH from brute-force attacks.
+Fail2Ban protects SSH from brute-force attacks by monitoring authentication logs and automatically blocking malicious IPs.
 
 ### Default settings:
 
@@ -106,24 +111,37 @@ Fail2Ban is used to protect SSH from brute-force attacks.
 - Ban time: 3600 seconds  
 - Find time: 600 seconds  
 
-It automatically monitors SSH logs and blocks malicious IPs.
+### 📧 Email Alert System (NEW)
+
+When an attack is detected, Fail2Ban sends a structured email alert:
+
+- Attacker IP address
+- Jail name (sshd)
+- Timestamp
+- Number of failed attempts
+- Auto-ban confirmation
+
+Email delivery is handled using:
+- Sendmail
+- Mailutils / Mailx
 
 ---
 
 ## 📊 Security Report
 
-After execution, a report is generated at:
+After execution, a SOC-style security report is generated at:
 
 ```
 /var/log/security_report.txt
 ```
 
-It includes:
+### Report includes:
 
 - SSH configuration status
 - Firewall status
 - Fail2Ban status
 - Active SSH connections
+- System security summary
 
 ---
 
@@ -132,28 +150,31 @@ It includes:
 - Do NOT run on production servers without testing
 - Ensure SSH key authentication is configured before disabling password login
 - Misconfiguration may lock you out of the system
+- Always keep console access (cloud/VPS recovery) enabled
 
 ---
 
 ## 🔥 Why This Project Matters
 
-This project demonstrates:
+This project demonstrates real-world DevSecOps and SOC practices:
 
 - Linux system administration
 - SSH security hardening
-- Automation scripting
-- SOC / Cybersecurity fundamentals
-- DevSecOps mindset
+- Security automation scripting
+- Incident detection & response (Fail2Ban)
+- SOC-style logging & reporting
+- DevSecOps automation mindset
 
 ---
 
 ## 🚀 Future Improvements
 
-- Email/Telegram alerts for Fail2Ban bans
-- SIEM integration (ELK / Wazuh)
-- Auto rollback on SSH misconfiguration
-- HTML dashboard reporting
-- Ansible playbook conversion
+- 📲 Telegram instant alert integration (faster than email)
+- 🌍 GeoIP tracking for attacker IPs
+- 📊 SIEM integration (Wazuh / ELK Stack)
+- 📈 Web dashboard for security monitoring
+- 🔁 Auto rollback for SSH misconfiguration
+- 🧠 AI-based anomaly detection layer
 
 ---
 
@@ -168,4 +189,4 @@ Focused on Linux infrastructure, automation, and security engineering.
 
 If you like this project, consider giving it a ⭐ on GitHub:
 
-https://github.com/ankitsinghvisen/Linux-Hardening-Automation-Script ```
+https://github.com/ankitsinghvisen/Linux-Hardening-Automation-Script
