@@ -1,1 +1,7 @@
-
+=== Linux Hardening Started ===
+[+] SSH Hardening Applied
+[+] UFW configured
+[+] Installing Fail2Ban...
+[+] Fail2Ban Enabled for SSH
+[+] Hardening Completed Successfully
+Report: /var/log/security_report.txt
